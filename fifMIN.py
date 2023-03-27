@@ -106,7 +106,7 @@ def closeSupport(l,levels,lim):
 
 n1=6
 n2=6
-backCandles=15
+backCandles=10
 signal = [0] * length
 
 for row in range(backCandles, len(df_15min)-n2):

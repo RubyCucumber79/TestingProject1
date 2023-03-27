@@ -45,12 +45,12 @@ class MyCandlesStrat(Strategy):
     def next(self):
         super().next() 
         if self.signal2==2:
-            sl1 = self.data.Close[-1] - (self.data.Close[-1]*0.1)
-            tp1 = self.data.Close[-1] + (self.data.Close[-1]*0.1)
+            sl1 = self.data.Close[-1] - (self.data.Close[-1]*0.05)
+            tp1 = self.data.Close[-1] + (self.data.Close[-1]*0.01)
             self.buy(sl=sl1, tp=tp1)
         elif self.signal2==1:
-            sl1 = self.data.Close[-1] + (self.data.Close[-1]*0.1)
-            tp1 = self.data.Close[-1] - (self.data.Close[-1]*0.1)
+            sl1 = self.data.Close[-1] + (self.data.Close[-1]*0.05)
+            tp1 = self.data.Close[-1] - (self.data.Close[-1]*0.01)
             self.sell(sl=sl1, tp=tp1)
 
 bt = Backtest(df, MyCandlesStrat, cash=10_000, commission=.002)
