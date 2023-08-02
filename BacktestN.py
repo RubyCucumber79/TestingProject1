@@ -31,4 +31,7 @@ class MyCandlesStrat(Strategy):
 
 bt = Backtest(df, MyCandlesStrat, cash=10_000, commission=.002)
 stat = bt.run()
-print(stat)          
+print(stat)   
+def provStat():
+    return stat
+       
