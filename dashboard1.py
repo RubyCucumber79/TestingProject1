@@ -47,28 +47,28 @@ stat_series = pd.Series(data)
 stat_df = pd.DataFrame(stat_series).transpose()
 
 # Create the dashboard layout (similar to the previous example)
-section1 = pn.Column(
-    pn.pane.Markdown("### Backtest Summary"),
-    pn.widgets.DataFrame(stat_df[['Start', 'End', 'Duration', 'Equity Final [$]', 'Equity Peak [$]', 'Return [%]', 'Buy & Hold Return [%]', 'Return (Ann.) [%]']])
-)
-# Create the bar graph for Equity Final and Equity Peak
+#section1 = pn.Column(
+#    pn.pane.Markdown("### Backtest Summary"),
+#    pn.widgets.DataFrame(stat_df[['Start', 'End', 'Duration', 'Equity Final [$]', 'Equity Peak [$]', 'Return [%]', 'Buy & Hold Return [%]', 'Return (Ann.) [%]']])
+#)
 fig, ax = plt.subplots(figsize=(6, 4))
 ax.bar(['Equity Final', 'Equity Peak'], [stat_df['Equity Final [$]'].values[0], stat_df['Equity Peak [$]'].values[0]])
 ax.set_ylabel('Equity [$]')
 ax.set_title('Backtest Summary - Equity Final and Equity Peak')
-plot_bar = pn.pane.Matplotlib(fig, tight=True)
+plot_bar = Matplotlib(fig,tight=True)
 
-# Create the pie chart for Return Percentage (green if positive, red if negative)
+# Calculate the return percentage and colors for the pie chart
 return_percentage = stat_df['Return [%]'].values[0]
 if return_percentage >= 0:
     colors = ['green']
 else:
     colors = ['red']
 
+# Create the pie chart for Return Percentage (green if positive, red if negative)
 fig_pie, ax_pie = plt.subplots(figsize=(4, 4))
 ax_pie.pie([abs(return_percentage), 100 - abs(return_percentage)], labels=['Return [%]', ''], colors=colors)
 ax_pie.set_title('Backtest Summary - Return Percentage')
-plot_pie = pn.pane.Matplotlib(fig_pie, tight=True)
+plot_pie = Matplotlib(fig_pie,tight=True)
 
 # Create the Panel components for buy and hold value and the plots
 buy_and_hold_value = pn.pane.Str(f"Buy & Hold Value: {stat_df['Buy & Hold Return [%]'].values[0]}%", styles={'font-weight': 'bold'})
@@ -93,7 +93,7 @@ section3 = pn.Column(
 
 # Create the overall dashboard layout
 dashboard = pn.Tabs(
-    ("Backtest Summary", section1),
+    ("Backtest Summary", backtest_summary_tab),
     ("Performance Metrics", section2),
     ("Trade Statistics", section3),
 )
